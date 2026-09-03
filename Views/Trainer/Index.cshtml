@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ItiFinalProjectMvcGym.Models.Trainer>
+
+@{
+    ViewData["Title"] = "Manage Trainers";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Manage Trainers</h2>
+    <a asp-action="Create" class="btn btn-primary">Create New Trainer</a>
+</div>
+
+<table class="table table-striped table-hover border">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Specialization</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this trainer?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

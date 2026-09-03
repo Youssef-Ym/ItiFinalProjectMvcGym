@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ItiFinalProjectMvcGym.Models.GymClass>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Class Name</th>
+            <th>Description</th>
+            <th>Schedule</th>
+            <th>Trainer Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center">No classes found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Schedule</td>
+                    <td>@(item.Trainer != null ? item.Trainer.Name : "N/A")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">View Details</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

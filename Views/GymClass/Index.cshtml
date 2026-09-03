@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ItiFinalProjectMvcGym.Models.GymClass>
+
+@{
+    ViewData["Title"] = "Gym Classes";
+}
+
+<h2>Available Gym Classes</h2>
+
+<div class="row my-3">
+    <div class="col-md-4">
+        <label class="form-label font-weight-bold">Filter by Trainer:</label>
+        <select id="trainerFilter" class="form-select" asp-items="ViewBag.Trainers">
+            <option value="">-- All Trainers --</option>
+        </select>
+    </div>
+</div>
+
+<div id="classesContainer">
+    <partial name="_ClassesTablePartial" model="Model" />
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#trainerFilter').change(function() {
+                var selectedTrainerId = $(this).val();
+
+                $.ajax({
+                    url: '@Url.Action("GetClassesByTrainer", "GymClass")',
+                    type: 'GET',
+                    data: { trainerId: selectedTrainerId },
+                    success: function(result) {
+                        $('#classesContainer').html(result);
+                    },
+                    error: function() {
+                        alert('Error loading filtered classes.');
+                    }
+                });
+            });
+        });
+    </script>
+}

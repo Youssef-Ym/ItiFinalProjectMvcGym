@@ -1,0 +1,48 @@
+﻿@model ItiFinalProjectMvcGym.Models.GymClass
+
+@{
+    ViewData["Title"] = "Class Details";
+}
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h3>Class: @Model.Name</h3>
+    </div>
+    <div class="card-body">
+        <p><strong>Description:</strong> @Model.Description</p>
+        <p><strong>Schedule:</strong> @Model.Schedule</p>
+        <p><strong>Trainer:</strong> @(Model.Trainer != null ? Model.Trainer.Name : "N/A")</p>
+    </div>
+</div>
+
+<h4>Enrolled Members</h4>
+@if (Model.Enrollments != null && Model.Enrollments.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Member Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Enrollment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model.Enrollments)
+            {
+                <tr>
+                    <td>@enrollment.Member?.Name</td>
+                    <td>@enrollment.Member?.Email</td>
+                    <td>@enrollment.Member?.Phone</td>
+                    <td>@enrollment.EnrollmentDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">No members currently enrolled in this class.</div>
+}
+
+<a asp-action="Index" class="btn btn-secondary">Back to Classes</a>
